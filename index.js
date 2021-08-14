@@ -11,6 +11,11 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+app.use((request, response, next) => {
+  console.log(request.body)
+  next()
+})
+
 let notes = [
   {
     id: 1,
@@ -90,6 +95,11 @@ app.post('/api/notes', (request, response) => { // CREA UNA NUEVA NOTA Y LA AÑA
   response.json(newNote) // COMO RESPUESTA DEL SERVIDOR ENVIO LA NUEVA NOTA
 })
 
+app.use((request, response) => {
+  response.status(404).json({
+    error: 'Not found'
+  })
+})
 /* CUANDO SE LEVANTA EL SERVIDOR SE HACE FORMA ASINCRONA POR ESO SE PONE UN CALLBACK
    DE ESTA FORMA ESPERA UNA RESPUESTA Y RECIEN MUESTRA EL MSJ POR CONSOLA   */
 
